@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Libraries.Data.TblProductMaster>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Product List</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .product-box {
+            display: inline-block;
+            width: 200px;
+            padding: 15px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .product-actions {
+            margin-top: 10px;
+        }
+
+        canvas {
+            max-width: 800px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Product List</h2>
+
+    <div>
+        @foreach (var product in Model)
+        {
+            <div class="product-box">
+                <h3>@product.ProductName</h3>
+                <p>@product.ProductDescription</p>
+                <p>Price: $@product.ProductPrice</p>
+
+                <div class="product-actions">
+                    <button onclick="addToCart('@product.ProductName')">Add to Cart</button>
+                    <button onclick="buyNow('@product.ProductName')">Buy Now</button>
+                </div>
+            </div>
+        }
+    </div>
+
+
+    <script>
+        var productNames = [@Html.Raw(string.Join(",", Model.Select(p => $"\"{p.ProductName}\"")))];
+
+        var productPrices = [@Html.Raw(string.Join(",", Model.Select(p => $"{p.ProductPrice}")))];
+
+        var ctx = document.getElementById('productChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: productNames,
+                datasets: [{
+                    label: 'Product Prices',
+                    data: productPrices,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        function addToCart(productName) {
+            // Implement your addToCart logic here
+            console.log('Added to Cart:', productName);
+        }
+
+        function buyNow(productName) {
+            // Implement your buyNow logic here
+            console.log('Buy Now:', productName);
+        }
+    </script>
+</body>
+</html>
+

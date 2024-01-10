@@ -1,0 +1,104 @@
+﻿@model NopCommerceApp.Models.RegistrationViewModel
+@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - XPay Life Bank</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px; /* Adjust the maximum width as needed */
+        }
+
+        td {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
+    <table border="1" align="center">
+        <tr>
+            <td>
+                <center>
+                    <div id="container">
+                        <div id="header">
+                            <h1>XPay Life Bank</h1>
+                            <h2>Register</h2>
+                        </div>
+
+                        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Customer.CustomerFname, "First Name:")
+                                @Html.EditorFor(m => m.Customer.CustomerFname, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Customer.CustomerLname, "Last Name:")
+                                @Html.EditorFor(m => m.Customer.CustomerLname, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Customer.CustomerMobile, "Mobile:")
+                                @Html.EditorFor(m => m.Customer.CustomerMobile, new { htmlAttributes = new { @class = "form-control", required = "required", pattern = "[0-9]+" } })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Customer.CustomerEmail, "Email:")
+                                @Html.EditorFor(m => m.Customer.CustomerEmail, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Customer.CustomerAddress, "Address:")
+                                @Html.EditorFor(m => m.Customer.CustomerAddress, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Customer.AccountNo, "Account No:")
+                                @Html.EditorFor(m => m.Customer.AccountNo, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Customer.SecurityQuestionsCode, "Select Security Question:")
+                                @Html.DropDownListFor(m => m.Customer.SecurityQuestionsCode, new SelectList(Model.tbl_security_question_master, "Code", "Name"), "-- Select --", new { @class = "form-control", required = "required" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Customer.SecurityAnswerCode, "Security Answer:")
+                                @Html.EditorFor(m => m.Customer.SecurityAnswerCode, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Customer.LoginPassword, "Password:")
+                                @Html.PasswordFor(m => m.Customer.LoginPassword, new { @class = "form-control", required = "required" })
+                            </div>
+
+                            <button type="submit">Register</button>
+
+                            <button type="button" onclick="location.href='@Url.Action("Login", "Account")'">Back</button>
+
+                            <span>@ViewBag.AlertMessage</span>
+                        }
+                    </div>
+                </center>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
