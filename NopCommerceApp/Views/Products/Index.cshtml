@@ -76,20 +76,10 @@
                         Product "@TempData["AddedProduct"]" has been added to the cart.
                     </div>
                 }
-                @if (ViewBag.Flag == 1)
-                {
-                    <div class="product-actions">
-                        <span>Add on cart</span>
-                        <button onclick="buyNow('@product.ProductName')">Buy Now</button>
-                    </div>
-                }
-                else
-                {
                     <div class="product-actions">
                         <button class="add-to-cart-btn" data-product-id="@product.Id" data-product-name="@product.ProductName" data-product-price="@product.ProductPrice">Add to Cart</button>
                         <button onclick="buyNow('@product.ProductName')">Buy Now</button>
                     </div>
-                }
             </div>
         }
     </div>

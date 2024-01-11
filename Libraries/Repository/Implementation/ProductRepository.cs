@@ -60,11 +60,7 @@ namespace Libraries.Repository.Implementation
             var product = _context.TblProductMaster.Find(productId);
             return product?.ProductImage;
         }
-        public bool IsProductInCart(long userId, long productId)
-        {
-            // Check if the product with the given productId is in the user's cart
-            return _context.TblCartItem.Any(item => item.UserId == userId && item.ProductId == productId);
-        }
+        
     }
 
 

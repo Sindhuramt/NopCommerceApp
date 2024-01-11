@@ -14,7 +14,6 @@ namespace Libraries.Repository.Interfaces
         void AddToCart(long userId, long productId,decimal price);
         void BuyNow(long userId, long productId);
         string GetImageUrl(long productId);
-        bool IsProductInCart(long userId, long productId);
 
     }
 }

@@ -24,10 +24,6 @@ namespace NopCommerceApp.Controllers
             foreach(var product in products)
             {
                 product.ProductImage = _productRepository.GetImageUrl(product.Id);
-                if (_productRepository.IsProductInCart(userId, product.Id))
-                {
-                    ViewBag.Flag = 1;
-                }
             }
             ViewBag.UserId = userId;
             return View(products);
