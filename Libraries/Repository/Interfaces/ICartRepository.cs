@@ -12,5 +12,6 @@ namespace Libraries.Repository.Interfaces
         List<TblCartItem> GetTblCartsbyId(long UserId);
         string getProductNamebyId(long? productId);
         void RemoveItems(long productId);
+        TblCartMaster CreateCartMaster(long userId, decimal? total, decimal discount, decimal? totalDiscountedPrice);
     }
 }

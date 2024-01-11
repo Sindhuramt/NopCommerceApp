@@ -1,0 +1,40 @@
+﻿@model Libraries.Data.TblCartMaster
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cart Master</title>
+    <!-- Add your styles or external CSS links here -->
+</head>
+<body>
+    <h2>Your Cart</h2>
+
+    <div>
+        <p>Total Price: $@(Model?.Price ?? 0)</p>
+        <p>Discount: $@(Model?.Discount ?? 0)</p>
+        <p>Total Discounted Price: $@(Model?.TotalPrice ?? 0)</p>
+    </div>
+
+    <div>
+        <!-- Add a form for applying discounts if needed -->
+        @using (Html.BeginForm("ApplyDiscount", "Cart", FormMethod.Post))
+        {
+            <label for="discountInput">Apply Discount:</label>
+            <input type="text" id="discountInput" name="discountInput" />
+            <button type="submit">Apply</button>
+        }
+    </div>
+
+    <div>
+        <button onclick="location.href='@Url.Action("ProceedToPayment", "Cart")'">Proceed to Payment</button>
+    </div>
+
+    <!-- Add any other content or styling as needed -->
+    <!-- Add your scripts or external JS links here -->
+</body>
+</html>

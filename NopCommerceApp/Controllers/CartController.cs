@@ -1,4 +1,5 @@
-﻿using Libraries.Repository.Interfaces;
+﻿using Libraries.Data;
+using Libraries.Repository.Interfaces;
 using NopCommerceApp.Models;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,22 @@ namespace NopCommerceApp.Controllers
                 listCartItems.Add(cartItem);
             }
             return View(listCartItems);
+        }
+        public ActionResult BuyNow()
+        {
+            long userId = GetLoggedInUserId();
+            List<TblCartItem> cartItems = _cartRepository.GetTblCartsbyId(userId);
+
+            // Calculate total and apply any discount logic here
+            decimal? total = cartItems.Sum(item => item.Price);
+            decimal discount = 0; // Implement your discount logic here
+            decimal? totalDiscountedPrice = total - discount;
+
+            // Create a cart master record
+            TblCartMaster cartMaster = _cartRepository.CreateCartMaster(userId, total, discount, totalDiscountedPrice);
+
+            // Pass the cart master ID to the CartMaster view
+            return View("CartMaster", cartMaster);
         }
 
         [HttpPost]

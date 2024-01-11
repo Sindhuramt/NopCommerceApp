@@ -37,5 +37,21 @@ namespace Libraries.Repository.Implementation
             _context.TblCartItem.RemoveRange(itemsToRemove);
             _context.SaveChanges();
         }
+        public TblCartMaster CreateCartMaster(long userId, decimal? total, decimal discount, decimal? totalDiscountedPrice)
+        {
+            TblCartMaster cartMaster = new TblCartMaster
+            {
+                UserId = userId,
+                Price = total,
+                Discount = discount,
+                TotalPrice = totalDiscountedPrice,
+                IsProcessed = false
+            };
+
+            _context.TblCartMaster.Add(cartMaster);
+            _context.SaveChanges();
+
+            return cartMaster;
+        }
     }
 }
