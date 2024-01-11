@@ -68,7 +68,7 @@
             <div class="product-box">
                 @if (!string.IsNullOrEmpty(@product.ProductImage))
                 {
-                    <img src="@Url.Content("~/Content/" + Path.GetFileName(@product.ProductImage))" alt="Product Image" />
+                    <img src="@Url.Content("~/Content/" + Path.GetFileName(@product.ProductImage))" alt="Product Image"width="300" height="200" />
                 }
                 else
                 {

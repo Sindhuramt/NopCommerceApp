@@ -77,8 +77,8 @@
                     <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
                     <td>$@Html.DisplayFor(modelItem => item.ProductPrice)</td>
                     <td>
-                        <button onclick="ClearCart('@item.ProductId')">
-                            <i class='fas fa-trash-alt'></i>
+                        <button onclick="location.href='@Url.Action("ClearCart", "Cart",new { productId = item.ProductId })'">
+                            <i class='f'>0</i>
                         </button>
                     </td>
                 </tr>

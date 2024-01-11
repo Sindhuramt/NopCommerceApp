@@ -38,7 +38,7 @@ namespace NopCommerceApp.Controllers
         {
             long userId = GetLoggedInUserId();
             _cartRepository.RemoveItems(productId);
-            return RedirectToAction("Index", new { userId });
+            return View();
         }
         private long GetLoggedInUserId()
         {
