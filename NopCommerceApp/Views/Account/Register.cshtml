@@ -18,6 +18,7 @@
         table {
             border-collapse: collapse;
             width: 100%;
+            border-color: red;
             max-width: 600px; /* Adjust the maximum width as needed */
         }
 
@@ -29,10 +30,14 @@
         .form-group {
             margin-bottom: 15px;
         }
+        #header h1 {
+            color: red; /* Set h1 color to red */
+            font-weight: bold; /* Make h1 bold */
+        }
     </style>
 </head>
 <body style="display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
-    <table border="1" align="center">
+    <table border="2" align="center">
         <tr>
             <td>
                 <center>
@@ -46,22 +51,22 @@
                         {
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Customer.CustomerFname, "First Name:")
-                                @Html.EditorFor(m => m.Customer.CustomerFname, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                @Html.EditorFor(m => m.Customer.CustomerFname, new { htmlAttributes = new { @class = "form-control", required = "required", pattern = "[A-Za-z]+" } })
                             </div>
 
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Customer.CustomerLname, "Last Name:")
-                                @Html.EditorFor(m => m.Customer.CustomerLname, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                @Html.EditorFor(m => m.Customer.CustomerLname, new { htmlAttributes = new { @class = "form-control", required = "required", pattern = "[A-Za-z]+" } })
                             </div>
 
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Customer.CustomerMobile, "Mobile:")
-                                @Html.EditorFor(m => m.Customer.CustomerMobile, new { htmlAttributes = new { @class = "form-control", required = "required", pattern = "[0-9]+" } })
+                                @Html.EditorFor(m => m.Customer.CustomerMobile, new { htmlAttributes = new { @class = "form-control", required = "required", pattern = "[0-9]{10}", title = "Please enter 10-digit mobile number" } })
                             </div>
 
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Customer.CustomerEmail, "Email:")
-                                @Html.EditorFor(m => m.Customer.CustomerEmail, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                @Html.EditorFor(m => m.Customer.CustomerEmail, new { htmlAttributes = new { @class = "form-control", required = "required", type = "email" } })
                             </div>
 
                             <div class="form-group">

@@ -10,8 +10,11 @@ namespace Libraries.Repository.Interfaces
     public interface IProductRepository
     {
         List<TblProductMaster> GetProducts();
-        TblProductMaster GetProductById(int productId);
-        void AddToCart(long userId, int productId,decimal price);
-        void BuyNow(int userId, int productId);
+        TblProductMaster GetProductById(long productId);
+        void AddToCart(long userId, long productId,decimal price);
+        void BuyNow(long userId, long productId);
+        string GetImageUrl(long productId);
+        bool IsProductInCart(long userId, long productId);
+
     }
 }

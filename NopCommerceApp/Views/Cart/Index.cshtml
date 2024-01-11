@@ -1,0 +1,97 @@
+﻿@model IEnumerable<NopCommerceApp.Models.CartItemViewModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-LcUqPh9wjl4cTS/R/gIdNiuUXlAKl3HQJgI6YbSt+me5sCE9X4gEUpnZwA/9Mf//sA6I/E+fP27bRvyG3j4BdQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #f8f9fa; /* Light gray background color */
+        }
+
+        th, td {
+            padding: 10px;
+            border: none; /* Remove cell borders */
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff; /* Blue header background color */
+            color: white;
+        }
+
+        td button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #dc3545; /* Red color for button */
+        }
+
+            td button:hover {
+                text-decoration: underline;
+            }
+
+        .total-section {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+            .total-section strong {
+                margin-right: 10px;
+            }
+
+        .buy-now-button {
+            background-color: #28a745; /* Green color for Buy Now button */
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Cart Items</h2>
+
+    <table>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                    <td>$@Html.DisplayFor(modelItem => item.ProductPrice)</td>
+                    <td>
+                        <button onclick="ClearCart('@item.ProductId')">
+                            <i class='fas fa-trash-alt'></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="total-section">
+        <strong>Total Price:</strong> $@Model.Sum(item => item.ProductPrice)
+    </div>
+
+    <div>
+        <button class="buy-now-button" type="button" onclick="location.href='@Url.Action("Checkout", "Cart")'">Buy Now</button>
+    </div>
+</body>
+</html>

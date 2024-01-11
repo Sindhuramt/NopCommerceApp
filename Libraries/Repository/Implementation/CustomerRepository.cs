@@ -18,16 +18,12 @@ namespace Libraries.Repository.Implementation
 
         public TblCustomerMaster AuthenticateUser(string email, string password)
         {
-            // For simplicity, this example assumes plain text passwords.
-            // In a production scenario, you should use secure password hashing.
-
             var customer = _context.TblCustomerMaster
                 .FirstOrDefault(c => c.CustomerEmail == email && c.LoginPassword == password);
 
             if (customer != null)
             {
-                // Store the customer ID in the session to track the authenticated user.
-                // Note: This is a simple example, and in a real-world scenario, you might use more secure authentication methods.
+           //track the authenticated user
                 HttpContext.Current.Session["CustomerId"] = customer.Id;
             }
 
@@ -64,13 +60,19 @@ namespace Libraries.Repository.Implementation
 
             if (customer != null)
             {
-                // Reset the password
+              
                 customer.LoginPassword = newPassword;
                 _context.SaveChanges();
                 return true;
             }
 
             return false;
+        }
+
+        public long GetUserIdByEmail(string email)
+        {
+            var user = _context.TblCustomerMaster.FirstOrDefault(u => u.CustomerEmail == email);
+            return user?.Id ?? 0;
         }
     }
 }

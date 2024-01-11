@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace NopCommerceApp.Controllers
 {
@@ -34,13 +35,16 @@ namespace NopCommerceApp.Controllers
 
                 if (customer != null)
                 {
-                    long userId = customer.Id;
-                    // Authentication successful
-                    return RedirectToAction("Index", "Products",  new { userId }); // Redirect to the home page after login
+                    var userId = _customerRepository.GetUserIdByEmail(model.Email);
+                    Session["UserId"] = userId;
+
+                    FormsAuthentication.SetAuthCookie(model.Email, false);
+
+                    return RedirectToAction("Index", "Products",  new { userId }); 
                 }
                 else
                 {
-                    // Invalid credentials, add a model error
+                  
                     ModelState.AddModelError("", "Invalid username or password");
                 }
             }
@@ -107,7 +111,7 @@ namespace NopCommerceApp.Controllers
 
                 if (resetPasswordResult)
                 {
-                    // Password reset successful, redirect to login page or another page
+                   
                     return RedirectToAction("Login");
                 }
 
@@ -115,7 +119,7 @@ namespace NopCommerceApp.Controllers
             }
 
             ModelState.AddModelError("Mobile", "Mobile Number not exist, Register first ");
-            // If password reset fails, return the forgot password view with validation errors
+         
             var securityQuestions = _customerRepository.GetSecurityQuestions();
             var forgotPasswordViewModel = new ForgotPasswordViewModel
             {

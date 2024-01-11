@@ -1,4 +1,5 @@
-﻿using Libraries.Repository.Interfaces;
+﻿using Libraries.Data;
+using Libraries.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,31 +19,51 @@ namespace NopCommerceApp.Controllers
 
         public ActionResult Index(long userId)
         {
-            var products = _productRepository.GetProducts();
+            List<TblProductMaster> products = new List<TblProductMaster>();
+            products = _productRepository.GetProducts();
+            foreach(var product in products)
+            {
+                product.ProductImage = _productRepository.GetImageUrl(product.Id);
+                if (_productRepository.IsProductInCart(userId, product.Id))
+                {
+                    ViewBag.Flag = 1;
+                }
+            }
             ViewBag.UserId = userId;
             return View(products);
         }
 
         [HttpPost]
-        public ActionResult AddToCart(int productId, long userId , decimal price)
+        public ActionResult AddToCart(long productId, decimal price , string productName)
         {
+            long userId = GetLoggedInUserId();
 
             _productRepository.AddToCart(userId, productId  , price);
 
-            // Optionally, redirect to the cart or another page
-            return RedirectToAction("Index", "Cart");
+            TempData["AddedProduct"] = productName;
+
+            // Return a success status
+            return Json(new { success = true });
         }
 
         [HttpPost]
-        public ActionResult BuyNow(int productId)
+        public ActionResult BuyNow(long productId)
         {
-            // Get the user ID from your authentication mechanism
-            int userId = 1; // Replace with actual user ID retrieval
+          
+            long userId = GetLoggedInUserId(); 
 
             _productRepository.BuyNow(userId, productId);
 
-            // Optionally, redirect to the order confirmation or another page
+            
             return RedirectToAction("Index", "Orders");
         }
+        private long GetLoggedInUserId()
+        {
+            return Session["UserId"] as long? ?? 0;
+            
+        }
+        
     }
+
 }
+    

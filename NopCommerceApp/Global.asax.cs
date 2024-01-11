@@ -21,6 +21,7 @@ namespace NopCommerceApp
             // Register your services/interfaces here using builder.RegisterType<YourService>().As<IYourService>();
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
             builder.RegisterType<ProductRepository>().As<IProductRepository>();
+            builder.RegisterType<CartRepository>().As<ICartRepository>();
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
