@@ -15,6 +15,6 @@ namespace Libraries.Repository.Interfaces
         TblCartMaster CreateCartMaster(long userId, decimal? total, decimal discount, decimal? totalDiscountedPrice);
         void UpdateCartMaster(TblCartMaster cartMaster);
         TblCartMaster GetCartMaster(long userId);
-
+        void SaveOrderToDatabase(TblOrderMaster order);
     }
 }

@@ -215,6 +215,43 @@ namespace NopCommerceApp.Controllers
             // Redirect back to the BuyNow action
             return RedirectToAction("BuyNow");
         }
+        public ActionResult ConfirmPayment()
+        {
+            long userId = GetLoggedInUserId();
+
+            // Get the cart items for the user
+            List<TblCartItem> cartItems = _cartRepository.GetTblCartsbyId(userId);
+
+            // Get the total quantity of items in the cart
+            int totalQuantity = cartItems.Count;
+
+            // Get the cart master
+            TblCartMaster cartMaster = _cartRepository.GetCartMaster(userId);
+
+            // Create an order with a unique transaction number
+            var order = new TblOrderMaster
+            {
+                TransactionId = GenerateTransactionNumber(),
+                CartMasterId = cartMaster.Id,
+                Price = cartMaster.Price ?? 0,  // Set default value if necessary
+                DiscountPrice = cartMaster.Discount ?? 0,  // Set default value if necessary
+                TotalPrice = cartMaster.TotalPrice ?? 0  // Set default value if necessary
+            };
+
+            // Save the order information into your database
+            _cartRepository.SaveOrderToDatabase(order);
+
+            return View(order);
+        }
+
+        
+
+        private string GenerateTransactionNumber()
+        {
+            // Generate a random 9-digit transaction number
+            Random random = new Random();
+            return "XPL" + random.Next(100000000, 999999999).ToString();
+        }
 
     }
 

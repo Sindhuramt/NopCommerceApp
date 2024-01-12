@@ -190,8 +190,10 @@
     <Compile Include="Entity\TblSecurityQuestionMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Implementation\CartRepository.cs" />
+    <Compile Include="Repository\Implementation\OrderRepository.cs" />
     <Compile Include="Repository\Implementation\ProductRepository.cs" />
     <Compile Include="Repository\Implementation\CustomerRepository.cs" />
+    <Compile Include="Repository\Interfaces\IOrderRepository.cs" />
     <Compile Include="Repository\Interfaces\ICartRepository.cs" />
     <Compile Include="Repository\Interfaces\IProductRepository.cs" />
     <Compile Include="Repository\Interfaces\ICustomerRepository.cs" />

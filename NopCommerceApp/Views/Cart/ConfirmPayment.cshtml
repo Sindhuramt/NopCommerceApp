@@ -1,0 +1,35 @@
+﻿@model NopCommerceApp.Models.OrderViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Payment Confirmation</title>
+    <!-- Add your styles or external CSS links here -->
+    <!-- Add any other necessary head content -->
+</head>
+<body>
+    <h2>Payment Confirmation</h2>
+
+    <div>
+        <p>Transaction Number: @Model.TransactionNumber</p>
+        <p>Quantity: @Model.Quantity</p>
+        <!-- Add other confirmation details as needed -->
+    </div>
+
+    <div>
+        <!-- Add a "View Order" button -->
+        <a href="@Url.Action("ViewOrder", "Order" )>
+            <button>View Order</button>
+        </a>
+    </div>
+
+    <!-- Add any other content or styling as needed -->
+    <!-- Add your scripts or external JS links here -->
+</body>
+</html>

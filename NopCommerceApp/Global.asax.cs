@@ -22,6 +22,7 @@ namespace NopCommerceApp
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
             builder.RegisterType<ProductRepository>().As<IProductRepository>();
             builder.RegisterType<CartRepository>().As<ICartRepository>();
+            builder.RegisterType<OrderRepository>().As<IOrderRepository>();
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

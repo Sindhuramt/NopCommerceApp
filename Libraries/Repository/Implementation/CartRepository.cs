@@ -64,5 +64,22 @@ namespace Libraries.Repository.Implementation
         {
             return _context.TblCartMaster.FirstOrDefault(c => c.UserId == userId);
         }
+        public void SaveOrderToDatabase(TblOrderMaster order)
+        {
+            // Map OrderViewModel properties to TblOrderMaster properties
+            var orderMaster = new TblOrderMaster
+            {
+                TransactionId = order.TransactionId,
+                CartMasterId = order.CartMasterId,
+                Price = order.Price,
+                DiscountPrice = order.DiscountPrice,
+                TotalPrice = order.TotalPrice,
+                // Set other properties accordingly
+            };
+
+            // Save the order to your database using your data context
+            _context.TblOrderMaster.Add(orderMaster);
+            _context.SaveChanges();
+        }
     }
 }
