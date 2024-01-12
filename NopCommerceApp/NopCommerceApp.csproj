@@ -240,6 +240,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CartItemViewModel.cs" />
+    <Compile Include="Models\BuyNowViewModel.cs" />
     <Compile Include="Models\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
@@ -256,7 +257,8 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Products\Orderhistory.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Views\Cart\CartMaster.cshtml" />
+    <Content Include="Views\Cart\BuyNow.cshtml" />
+    <Content Include="Views\Cart\Payment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

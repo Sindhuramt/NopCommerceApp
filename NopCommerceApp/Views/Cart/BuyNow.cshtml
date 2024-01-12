@@ -1,0 +1,100 @@
+﻿@model NopCommerceApp.Models.BuyNowViewModel
+    @{ 
+        Layout = null;
+    }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Cart</title>
+    <!-- Add your styles or external CSS links here -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        div.cart-info {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            padding: 5px;
+            width: 100px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        /* Add any additional styling as needed */
+    </style>
+</head>
+<body>
+    <h3>Cart Items</h3>
+    <ul>
+        @foreach (var item in Model.CartItems)
+        {
+            <li>@item.ProductName - $@item.ProductPrice</li>
+        }
+    </ul>
+
+    <h2>Your Cart</h2>
+
+    <div class="cart-info">
+        <p>Discount: $@(Model?.Discount ?? 0)</p>
+        <p>Total Discounted Price: $@(Model?.TotalPrice ?? 0)</p>
+    </div>
+
+    <div>
+        <!-- Form for applying discounts if needed -->
+        @using (Html.BeginForm("ApplyDiscount", "Cart", FormMethod.Post))
+        {
+            <label for="discountInput">Apply Discount:</label>
+            <input type="text" id="discountInput" name="discountInput" />
+            <button type="submit">Apply</button>
+        }
+    </div>
+
+    <div>
+        <button onclick="location.href='@Url.Action("ProceedToPayment", "Cart")'">Proceed to Payment</button>
+    </div>
+
+    <!-- Add any other content or styling as needed -->
+    <!-- Add your scripts or external JS links here -->
+</body>
+</html>

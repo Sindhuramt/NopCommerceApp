@@ -77,9 +77,9 @@
                     <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
                     <td>$@Html.DisplayFor(modelItem => item.ProductPrice)</td>
                     <td>
-                        <button onclick="location.href='@Url.Action("ClearCart", "Cart",new { productId = item.ProductId })'">
+                        <a href="@Url.Action("ClearCart", "Cart",new { Id = item.Id })">
                             <i class='f'>Delete</i>
-                        </button>
+                        </a>
                     </td>
                 </tr>
             }
@@ -91,7 +91,7 @@
     </div>
 
     <div>
-        <button class="buy-now-button" type="button" onclick="location.href='@Url.Action("Checkout", "Cart")'">Buy Now</button>
+        <button class="buy-now-button" type="button" onclick="location.href='@Url.Action("BuyNow", "Cart")'">Buy Now</button>
     </div>
 </body>
 </html>

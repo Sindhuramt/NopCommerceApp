@@ -28,10 +28,10 @@ namespace Libraries.Repository.Implementation
             return _context.TblProductMaster.Where(c => c.Id == productId).FirstOrDefault().ProductName;
         }
 
-        public void RemoveItems(long productID)
+        public void RemoveItems(long Id)
         {
             var itemsToRemove = _context.TblCartItem
-                .Where(c => c.ProductId == productID)
+                .Where(c => c.Id == Id)
                 .ToList();
 
             _context.TblCartItem.RemoveRange(itemsToRemove);
