@@ -53,6 +53,13 @@ namespace Libraries.Repository.Implementation
 
             return cartMaster;
         }
+        public void UpdateCartMaster(TblCartMaster cartMaster)
+        {
+            _context.TblCartMaster.Update(cartMaster);  
+
+            // Save changes to the database
+            _context.SaveChanges();
+        }
         public TblCartMaster GetCartMaster(long userId)
         {
             return _context.TblCartMaster.FirstOrDefault(c => c.UserId == userId);
