@@ -111,18 +111,19 @@
     });
 
         function buyNow(productId, productName, price) {
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("RemoveAndAddItem", "Cart")",
-            data: { productId: productId, productName: productName, price: price },
-            success: function () {
-                alert("Item removed and added successfully!");
-            },
-            error: function () {
-                alert("Error removing and adding the item.");
-            }
-        });
-    }
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("RemoveAndAddItem", "Cart")",
+        data: { productId: productId, productName: productName, price: price },
+        success: function () {
+            alert("Item removed and added successfully!");
+        },
+        error: function () {
+            alert("Error removing and adding the item.");
+        }
+    });
+}
+
 
     </script>
 
