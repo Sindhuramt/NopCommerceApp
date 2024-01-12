@@ -53,5 +53,9 @@ namespace Libraries.Repository.Implementation
 
             return cartMaster;
         }
+        public TblCartMaster GetCartMaster(long userId)
+        {
+            return _context.TblCartMaster.FirstOrDefault(c => c.UserId == userId);
+        }
     }
 }

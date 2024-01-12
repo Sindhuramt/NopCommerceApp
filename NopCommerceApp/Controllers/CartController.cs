@@ -74,35 +74,74 @@ namespace NopCommerceApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult BuyNow(decimal? discountInput)
+        //public ActionResult BuyNow(decimal? discountInput)
+        //{
+        //    long userId = GetLoggedInUserId();
+
+        //    // Retrieve the existing cart master from the repository
+        //    TblCartMaster cartMaster = _cartRepository.GetCartMaster(userId);
+
+        //    // Check if the cart master exists; if not, you may handle this case based on your business logic
+        //    if (cartMaster == null)
+        //    {
+        //        // Handle the case where the cart master doesn't exist
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    // Calculate the total price of items in the cart
+        //    decimal? total = _cartRepository.GetTotalCartPrice(userId);
+
+        //    // Apply the discount input if provided, otherwise, use the default discount logic
+        //    decimal discount = CalculateDiscountLogic(total, discountInput);
+
+        //    // Calculate the total discounted price
+        //    decimal? totalDiscountedPrice = total - discount;
+
+        //    // Update the properties of the existing cart master
+        //    cartMaster.TotalPrice = total;
+        //    cartMaster.Discount = discount;
+        //    cartMaster.TotalDiscountedPrice = totalDiscountedPrice;
+
+        //    // Update the existing cart master in the repository
+        //    _cartRepository.UpdateCartMaster(cartMaster);
+
+        //    // Retrieve the cart items associated with the cart master
+        //    var cartItems = _cartRepository.GetTblCartsbyId(userId);
+        //    var listCartItems = MapToCartItemViewModels(cartItems);
+
+        //    // Create a BuyNowViewModel and populate it with the cart items and updated cart master
+        //    var viewModel = new BuyNowViewModel
+        //    {
+        //        CartItems = listCartItems,
+        //        CartMaster = cartMaster,
+        //        TotalPrice = total,
+        //        Discount = discount
+        //    };
+
+        //    // Pass the BuyNowViewModel to the view
+        //    return View("BuyNow", viewModel);
+        //}
+        public ActionResult ProceedToPayment()
         {
+            // Retrieve necessary data for the payment process
             long userId = GetLoggedInUserId();
             var cartItems = _cartRepository.GetTblCartsbyId(userId);
             var listCartItems = MapToCartItemViewModels(cartItems);
 
-            // Calculate the total price of items in the cart
-            decimal? total = cartItems.Sum(item => item.Price);
+            // Retrieve the cart master details
+            TblCartMaster cartMaster = _cartRepository.GetCartMaster(userId);
 
-            // Apply the discount input if provided, otherwise, use the default discount logic
-            decimal discount = CalculateDiscountLogic( total,  discountInput );
-
-            // Calculate the total discounted price
-            decimal? totalDiscountedPrice = total - discount;
-
-            // Create a TblCartMaster object with the calculated values
-            TblCartMaster cartMaster = _cartRepository.CreateCartMaster(userId, total, discount, totalDiscountedPrice);
-
-            // Create a BuyNowViewModel and populate it with the cart items and cart master
-            var viewModel = new BuyNowViewModel
+            // Create a PaymentViewModel to pass necessary data to the payment view
+            var paymentViewModel = new PaymentViewModel
             {
                 CartItems = listCartItems,
-                CartMaster = cartMaster,
-                TotalPrice = total,
-                Discount = discount
+                CartMaster = cartMaster
             };
 
-            // Pass the BuyNowViewModel to the view
-            return View("BuyNow", viewModel);
+            // You can perform additional processing or validation here if needed
+
+            // Pass the PaymentViewModel to the payment view
+            return View(paymentViewModel);
         }
 
 

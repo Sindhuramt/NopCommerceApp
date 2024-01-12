@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="Models\CartItemViewModel.cs" />
     <Compile Include="Models\BuyNowViewModel.cs" />
+    <Compile Include="Models\PaymentViewModel.cs" />
     <Compile Include="Models\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
