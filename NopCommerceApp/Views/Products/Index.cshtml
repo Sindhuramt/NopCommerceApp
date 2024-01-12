@@ -68,7 +68,7 @@
             <div class="product-box">
                 @if (!string.IsNullOrEmpty(@product.ProductImage))
                 {
-                    <img src="@Url.Content("~/Content/" + Path.GetFileName(@product.ProductImage))" alt="Product Image"width="300" height="200" />
+                    <img src="@Url.Content("~/Content/" + Path.GetFileName(@product.ProductImage))" alt="Product Image" width="300" height="200" />
                 }
                 else
                 {
@@ -83,37 +83,38 @@
                         Product "@TempData["AddedProduct"]" has been added to the cart.
                     </div>
                 }
-                    <div class="product-actions">
-                        <button class="add-to-cart-btn" data-product-id="@product.Id" data-product-name="@product.ProductName" data-product-price="@product.ProductPrice">Add to Cart</button>
-                        <button onclick="buyNow('@product.ProductName')">Buy Now</button>
-                    </div>
+                <div class="product-actions">
+                    <button class="add-to-cart-btn" data-product-id="@product.Id" data-product-name="@product.ProductName" data-product-price="@product.ProductPrice">Add to Cart</button>
+                    <button onclick="buyNow('@product.ProductName')">Buy Now</button>
+                </div>
             </div>
         }
     </div>
 
     <script>
-        $(".add-to-cart-btn").click(function () {
-            var productId = $(this).data("product-id");
-            var productName = $(this).data("product-name");
-            var productPrice = $(this).data("product-price");
+    $(".add-to-cart-btn").click(function () {
+        var productId = $(this).data("product-id");
+        var productName = $(this).data("product-name");
+        var productPrice = $(this).data("product-price");
 
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("AddToCart", "Products")",
-                data: { productId: productId, productName: productName, price: productPrice },
-                success: function () {
-                    alert("Product added to the cart!");
-                },
-                error: function () {
-                    alert("Error adding the product to the cart.");
-                }
-            });
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddToCart", "Products")",
+            data: { productId: productId, productName: productName, price: productPrice },
+            success: function () {
+                alert("Product added to the cart!");
+            },
+            error: function () {
+                alert("Error adding the product to the cart.");
+            }
         });
+    });
 
-        function buyNow(productName) {
-            // Implement your buyNow logic here
-            console.log('Buy Now:', productName);
-        }
+    function buyNow(productName) {
+        // Redirect to the BuyNow action in the CartController
+        window.location.href = "@Url.Action("BuyNow", "Cart")";
+    }
     </script>
+
 </body>
 </html>
