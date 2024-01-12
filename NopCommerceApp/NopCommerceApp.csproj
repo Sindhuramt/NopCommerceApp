@@ -260,6 +260,7 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\BuyNow.cshtml" />
     <Content Include="Views\Cart\Payment.cshtml" />
+    <Content Include="Views\Cart\ProceedToPayment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

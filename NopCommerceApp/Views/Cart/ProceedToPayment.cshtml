@@ -1,0 +1,85 @@
+﻿@model NopCommerceApp.Models.PaymentViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Payment</title>
+    <!-- Add your styles or external CSS links here -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .payment-info {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <h2>Cash on Delivery</h2>
+
+    <div class="payment-info">
+        <label for="paymentMethod">Payment Method:</label>
+        <p id="paymentMethod">Cash on Delivery</p>
+
+        <label for="discountPrice">Discount Price:</label>
+        <p id="discountPrice">$@(Model?.CartMaster?.Discount ?? 0)</p>
+
+        <label for="totalPrice">Total Price:</label>
+        <p id="totalPrice">$@(Model?.CartMaster.TotalPrice ?? 0)</p>
+    </div>
+
+    <div>
+        <!-- Add a form for confirming the payment if needed -->
+        @using (Html.BeginForm("ConfirmPayment", "Cart", FormMethod.Post))
+        {
+            <button type="submit">Confirm</button>
+        }
+    </div>
+
+    <!-- Add any other content or styling as needed -->
+    <!-- Add your scripts or external JS links here -->
+</body>
+</html>
