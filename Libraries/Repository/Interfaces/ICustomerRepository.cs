@@ -15,6 +15,7 @@ namespace Libraries.Repository.Interfaces
         int CheckEmail(string email);
         int CheckMobile(string mobile);
         bool RecoverPassword(string mobile, string securityQuestionCode, string securityAnswer, string newPassword);
-        long GetUserIdByEmail(string email);    
+        long GetUserIdByEmail(string email);
+        bool CheckSecurityQuestion(string mobile, string securityQuestionCode, string securityAnswer);
     }
 }

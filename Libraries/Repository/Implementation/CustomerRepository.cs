@@ -74,5 +74,15 @@ namespace Libraries.Repository.Implementation
             var user = _context.TblCustomerMaster.FirstOrDefault(u => u.CustomerEmail == email);
             return user?.Id ?? 0;
         }
+        public bool CheckSecurityQuestion(string mobile, string securityQuestionCode, string securityAnswer)
+        {
+            var customer = _context.TblCustomerMaster
+                .FirstOrDefault(c => c.CustomerMobile == mobile &&
+                                      c.SecurityQuestionsCode == securityQuestionCode &&
+                                      c.SecurityAnswerCode == securityAnswer);
+
+            return customer != null;
+        }
+
     }
 }

@@ -107,26 +107,40 @@ namespace NopCommerceApp.Controllers
 
             if (mobileExist == 1)
             {
-                var resetPasswordResult = _customerRepository.RecoverPassword(model.Mobile, model.SecurityQuestionCode, model.SecurityAnswer, model.NewPassword);
+                // Check security question and answer
+                var isSecurityAnswerCorrect = _customerRepository.CheckSecurityQuestion(model.Mobile, model.SecurityQuestionCode, model.SecurityAnswer);
 
-                if (resetPasswordResult)
+                if (isSecurityAnswerCorrect)
                 {
-                   
-                    return RedirectToAction("Login");
-                }
+                    // Security question and answer are correct, proceed with password recovery
+                    var resetPasswordResult = _customerRepository.RecoverPassword(model.Mobile, model.SecurityQuestionCode, model.SecurityAnswer, model.NewPassword);
 
-                ModelState.AddModelError(string.Empty, "Invalid mobile number, security question, or security answer");
+                    if (resetPasswordResult)
+                    {
+                        return RedirectToAction("Login");
+                    }
+
+                    ModelState.AddModelError(string.Empty, "Failed to reset the password. Please try again later.");
+                }
+                else
+                {
+                    ModelState.AddModelError("SecurityAnswer", "Incorrect security question or answer.");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("Mobile", "Mobile number is not registered. Please register first.");
             }
 
-            ModelState.AddModelError("Mobile", "Mobile Number not exist, Register first ");
-         
             var securityQuestions = _customerRepository.GetSecurityQuestions();
             var forgotPasswordViewModel = new ForgotPasswordViewModel
             {
                 tbl_security_question_master = securityQuestions
             };
+
             return View(forgotPasswordViewModel);
         }
+
 
 
     }
