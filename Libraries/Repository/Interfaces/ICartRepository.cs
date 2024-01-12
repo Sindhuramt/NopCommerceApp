@@ -13,5 +13,6 @@ namespace Libraries.Repository.Interfaces
         string getProductNamebyId(long? productId);
         void RemoveItems(long productId);
         TblCartMaster CreateCartMaster(long userId, decimal? total, decimal discount, decimal? totalDiscountedPrice);
+
     }
 }

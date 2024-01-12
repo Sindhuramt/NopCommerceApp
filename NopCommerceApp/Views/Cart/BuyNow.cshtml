@@ -82,7 +82,7 @@
 
     <div>
         <!-- Form for applying discounts if needed -->
-        @using (Html.BeginForm("ApplyDiscount", "Cart", FormMethod.Post))
+        @using (Html.BeginForm("BuyNow", "Cart", FormMethod.Post))
         {
             <label for="discountInput">Apply Discount:</label>
             <input type="text" id="discountInput" name="discountInput" />

@@ -73,6 +73,37 @@ namespace NopCommerceApp.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public ActionResult BuyNow(decimal? discountInput)
+        {
+            long userId = GetLoggedInUserId();
+            var cartItems = _cartRepository.GetTblCartsbyId(userId);
+            var listCartItems = MapToCartItemViewModels(cartItems);
+
+            // Calculate the total price of items in the cart
+            decimal? total = cartItems.Sum(item => item.Price);
+
+            // Apply the discount input if provided, otherwise, use the default discount logic
+            decimal discount = CalculateDiscountLogic( total,  discountInput );
+
+            // Calculate the total discounted price
+            decimal? totalDiscountedPrice = total - discount;
+
+            // Create a TblCartMaster object with the calculated values
+            TblCartMaster cartMaster = _cartRepository.CreateCartMaster(userId, total, discount, totalDiscountedPrice);
+
+            // Create a BuyNowViewModel and populate it with the cart items and cart master
+            var viewModel = new BuyNowViewModel
+            {
+                CartItems = listCartItems,
+                CartMaster = cartMaster,
+                TotalPrice = total,
+                Discount = discount
+            };
+
+            // Pass the BuyNowViewModel to the view
+            return View("BuyNow", viewModel);
+        }
 
 
         public ActionResult ClearCart(long Id)
@@ -87,6 +118,41 @@ namespace NopCommerceApp.Controllers
             return Session["UserId"] as long? ?? 0;
 
         }
+        private List<CartItemViewModel> MapToCartItemViewModels(List<TblCartItem> cartItems)
+        {
+            List<CartItemViewModel> result = new List<CartItemViewModel>();
+
+            foreach (var cartItem in cartItems)
+            {
+                CartItemViewModel cartItemViewModel = new CartItemViewModel
+                {
+                    Id = cartItem.Id,
+                    ProductId = cartItem.ProductId,
+                    ProductName = _cartRepository.getProductNamebyId(cartItem.ProductId),
+                    ProductPrice = cartItem.Price
+                };
+
+                result.Add(cartItemViewModel);
+            }
+
+            return result;
+        }
+        private decimal CalculateDiscountLogic(decimal? total, decimal? discountInput )
+        {
+            // If the user provides a discountInput, use it; otherwise, apply the default logic
+            if (discountInput.HasValue)
+            {
+                return discountInput.Value;
+            }
+
+            // Replace this with your actual default discount calculation logic
+            // This is just a placeholder, you should implement your own logic here
+            decimal defaultDiscountPercentage = 10; // Example: 10% default discount
+            decimal defaultDiscount = (total ?? 0) * (defaultDiscountPercentage / 100);
+
+            return defaultDiscount;
+        }
+
     }
 
 }
