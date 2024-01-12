@@ -74,53 +74,52 @@ namespace NopCommerceApp.Controllers
         }
 
         [HttpPost]
-        //public ActionResult BuyNow(decimal? discountInput)
-        //{
-        //    long userId = GetLoggedInUserId();
+        public ActionResult BuyNow(decimal? discountInput)
+        {
+            long userId = GetLoggedInUserId();
 
-        //    // Retrieve the existing cart master from the repository
-        //    TblCartMaster cartMaster = _cartRepository.GetCartMaster(userId);
+            // Retrieve the cart items associated with the cart master
+            var cartItems = _cartRepository.GetTblCartsbyId(userId);
+            // Retrieve the existing cart master from the repository
+            TblCartMaster cartMaster = _cartRepository.GetCartMaster(userId);
 
-        //    // Check if the cart master exists; if not, you may handle this case based on your business logic
-        //    if (cartMaster == null)
-        //    {
-        //        // Handle the case where the cart master doesn't exist
-        //        return RedirectToAction("Index");
-        //    }
+            // Check if the cart master exists; if not, you may handle this case based on your business logic
+            if (cartMaster == null)
+            {
+                // Handle the case where the cart master doesn't exist
+                return RedirectToAction("Index");
+            }
 
-        //    // Calculate the total price of items in the cart
-        //    decimal? total = _cartRepository.GetTotalCartPrice(userId);
+            // Calculate the total price of items in the cart
+            var total = cartItems.Sum(item => item.Price);
 
-        //    // Apply the discount input if provided, otherwise, use the default discount logic
-        //    decimal discount = CalculateDiscountLogic(total, discountInput);
+            // Apply the discount input if provided, otherwise, use the default discount logic
+            decimal discount = CalculateDiscountLogic(total, discountInput);
 
-        //    // Calculate the total discounted price
-        //    decimal? totalDiscountedPrice = total - discount;
+            // Calculate the total discounted price
+            decimal? totalDiscountedPrice = total - discount;
 
-        //    // Update the properties of the existing cart master
-        //    cartMaster.TotalPrice = total;
-        //    cartMaster.Discount = discount;
-        //    cartMaster.TotalDiscountedPrice = totalDiscountedPrice;
+            // Update the properties of the existing cart master
+            cartMaster.Discount = discount;
+            cartMaster.TotalPrice = totalDiscountedPrice;
 
-        //    // Update the existing cart master in the repository
-        //    _cartRepository.UpdateCartMaster(cartMaster);
+            // Update the existing cart master in the repository
+            _cartRepository.UpdateCartMaster(cartMaster);
 
-        //    // Retrieve the cart items associated with the cart master
-        //    var cartItems = _cartRepository.GetTblCartsbyId(userId);
-        //    var listCartItems = MapToCartItemViewModels(cartItems);
+            var listCartItems = MapToCartItemViewModels(cartItems);
 
-        //    // Create a BuyNowViewModel and populate it with the cart items and updated cart master
-        //    var viewModel = new BuyNowViewModel
-        //    {
-        //        CartItems = listCartItems,
-        //        CartMaster = cartMaster,
-        //        TotalPrice = total,
-        //        Discount = discount
-        //    };
+            // Create a BuyNowViewModel and populate it with the cart items and updated cart master
+            var viewModel = new BuyNowViewModel
+            {
+                CartItems = listCartItems,
+                CartMaster = cartMaster,
+                TotalPrice = total,
+                Discount = discount
+            };
 
-        //    // Pass the BuyNowViewModel to the view
-        //    return View("BuyNow", viewModel);
-        //}
+            // Pass the BuyNowViewModel to the view
+            return View("BuyNow", viewModel);
+        }
         public ActionResult ProceedToPayment()
         {
             // Retrieve necessary data for the payment process
