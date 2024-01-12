@@ -196,22 +196,8 @@ namespace NopCommerceApp.Controllers
         public ActionResult RemoveAndAddItem(long productId, string productName, decimal price)
         {
             long userId = GetLoggedInUserId();
-
-            // Get the cart items for the user
-            List<TblCartItem> cartItems = _cartRepository.GetTblCartsbyId(userId);
-
-            // Find the cart item with the specified product name
-            TblCartItem itemToRemove = cartItems.FirstOrDefault(item => _cartRepository.getProductNamebyId(item.ProductId) == productName);
-
-            if (itemToRemove != null)
-            {
-                // Remove the existing item from the cart
-                _cartRepository.RemoveItems(itemToRemove.Id);
-
-                // Use the AddToCart action to add the new item
-                _productRepository.AddToCart(userId, productId, price);
-            }
-
+            // Use the AddToCart action to add the new item
+            _productRepository.AddToCart(userId, productId, price);
             // Redirect back to the BuyNow action
             return RedirectToAction("BuyNow");
         }
