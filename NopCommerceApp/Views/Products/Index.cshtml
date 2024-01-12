@@ -85,7 +85,7 @@
                 }
                 <div class="product-actions">
                     <button class="add-to-cart-btn" data-product-id="@product.Id" data-product-name="@product.ProductName" data-product-price="@product.ProductPrice">Add to Cart</button>
-                    <button onclick="buyNow('@product.ProductName')">Buy Now</button>
+                    <button onclick="buyNow('@product.Id,@product.ProductName,@product.ProductPrice')">Buy Now</button>
                 </div>
             </div>
         }
@@ -110,10 +110,20 @@
         });
     });
 
-    function buyNow(productName) {
-        // Redirect to the BuyNow action in the CartController
-        window.location.href = "@Url.Action("BuyNow", "Cart")";
+        function buyNow(productId, productName, price) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("RemoveAndAddItem", "Cart")",
+            data: { productId: productId, productName: productName, price: price },
+            success: function () {
+                alert("Item removed and added successfully!");
+            },
+            error: function () {
+                alert("Error removing and adding the item.");
+            }
+        });
     }
+
     </script>
 
 </body>

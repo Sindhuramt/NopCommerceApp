@@ -12,10 +12,12 @@ namespace NopCommerceApp.Controllers
     public class CartController : Controller
     {
         private readonly ICartRepository _cartRepository;
+        private readonly IProductRepository _productRepository;
 
-        public CartController(ICartRepository cartRepository)
+        public CartController(ICartRepository cartRepository ,IProductRepository productRepository)
         {
             _cartRepository = cartRepository ?? throw new ArgumentNullException(nameof(cartRepository));
+            _productRepository = productRepository;
         }
 
         public ActionResult Index()
@@ -72,6 +74,7 @@ namespace NopCommerceApp.Controllers
             // Pass the BuyNowViewModel to the view
             return View(viewModel);
         }
+
 
         [HttpPost]
         public ActionResult BuyNow(decimal? discountInput)
@@ -189,6 +192,28 @@ namespace NopCommerceApp.Controllers
             decimal defaultDiscount = (total ?? 0) * (defaultDiscountPercentage / 100);
 
             return defaultDiscount;
+        }
+        public ActionResult RemoveAndAddItem(long productId, string productName, decimal price)
+        {
+            long userId = GetLoggedInUserId();
+
+            // Get the cart items for the user
+            List<TblCartItem> cartItems = _cartRepository.GetTblCartsbyId(userId);
+
+            // Find the cart item with the specified product name
+            TblCartItem itemToRemove = cartItems.FirstOrDefault(item => _cartRepository.getProductNamebyId(item.ProductId) == productName);
+
+            if (itemToRemove != null)
+            {
+                // Remove the existing item from the cart
+                _cartRepository.RemoveItems(itemToRemove.Id);
+
+                // Use the AddToCart action to add the new item
+                _productRepository.AddToCart(userId, productId, price);
+            }
+
+            // Redirect back to the BuyNow action
+            return RedirectToAction("BuyNow");
         }
 
     }
